@@ -1,43 +1,58 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 
 public class Song {
 
-    public void printSong() {
+    public void printSongToCSV(String file) throws FileNotFoundException {
+        PrintStream printStream = new PrintStream(file);
+        printStream.println("day, verse");
+        try {
 
         for (int day = 1; day <= 12; day++) {
-            System.out.print("On the ");
-            System.out.print(day);
 
-            switch (day) {
-                case 1 ->  System.out.print("st");
-                case 2 ->  System.out.print("nd");
-                case 3 ->  System.out.print("rd");
-                default -> System.out.print("th");
-            }
+            String verse = "On the " + day;
 
-            System.out.println(" day of Christmas my true love gave to me");
 
-            switch (day) {
-                case 12: System.out.println("Twelve drummers drumming,");
-                case 11: System.out.println("Eleven pipers piping,");
-                case 10: System.out.println("Ten lords a leaping,");
-                case 9:  System.out.println("Nine ladies dancing,");
-                case 8:  System.out.println("Eight maids a milking,");
-                case 7:  System.out.println("Seven swans a swimming,");
-                case 6:  System.out.println("Six geese a laying,");
-                case 5:  System.out.println("Five golden rings,");
-                case 4:  System.out.println("Four calling birds,");
-                case 3:  System.out.println("Three French hens,");
-                case 2:  System.out.println("Two turtle doves, and");
-                default: System.out.println("A partridge in a pear tree.");
-            }
+           verse += switch (day) {
+                case 1 -> "st";
+                case 2 ->  "nd";
+                case 3 ->  "rd";
+                default -> "th";
+            };
 
-            System.out.println();
+            verse += " day of Christmas my true love gave to me";
+
+            verse += switch  (day) {
+                case 12 -> "Twelve drummers drumming,";
+                case 11 -> "Eleven pipers piping,";
+                case 10 -> "Ten lords a leaping,";
+                case 9 ->  "Nine ladies dancing,";
+                case 8 ->  "Eight maids a milking,";
+                case 7 ->  "Seven swans a swimming,";
+                case 6 ->  "Six geese a laying,";
+                case 5 ->  "Five golden rings,";
+                case 4 ->  "Four calling birds,";
+                case 3 ->  "Three French hens,";
+                case 2 ->  "Two turtle doves, and";
+                default -> "A partridge in a pear tree.";
+            };
+            printStream.println(day + ", " + verse);
+
         }
-    }
+
+    } catch(Exception e) {
+            new RuntimeException(e);
+        }
+
+        }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
+
         Song song = new Song();
-        song.printSong();
+        song.printSongToCSV("song.csv");
+
+
     }
 }
